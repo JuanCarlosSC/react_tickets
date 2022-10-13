@@ -2,8 +2,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import {
   createBrowserRouter,
-  RouterProvider,
-  Route,
+  RouterProvider
 }
   from "react-router-dom";
 import "./index.css";
@@ -20,6 +19,8 @@ import EditContact,
   from "./routes/edit";
 import { action as destroyAction } from "./routes/destroy";
 import Index from "./routes/index";
+import Login from "./pages/login";
+import { ProtectedRoute } from "./protectedRoute";
 
 const router = createBrowserRouter([
   {
@@ -30,6 +31,7 @@ const router = createBrowserRouter([
     action: rootAction,
     children: [
       {
+        // element:<ProtectedRoute />,
         errorElement: <ErrorPage />,
         children: [
           { 
@@ -39,7 +41,7 @@ const router = createBrowserRouter([
           },
           {
             path: "contacts/:contactId",
-            element: <Contact />,
+            element:<Contact />,
             loader: contactLoader,
             action: contactAction,
             // errorElement: <ErrorPage />,
@@ -59,6 +61,11 @@ const router = createBrowserRouter([
         ]
       },
     ],
+  },
+  {
+    path: "/login",
+    element:<ProtectedRoute > <Login /></ProtectedRoute >,
+    errorElement: <ErrorPage />,
   },
 ]);
 
